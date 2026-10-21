@@ -8,8 +8,8 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
-import MovieReviews from "../movieReviews"
-
+import MovieReviews from "../movieReviews";
+import CastList from "../castList";
 
 const root = {
     display: "flex",
@@ -19,20 +19,23 @@ const root = {
     padding: 1.5,
     margin: 0,
 };
+
 const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie }) => {  // Don't miss this!
-const [drawerOpen, setDrawerOpen] = useState(false);
+const MovieDetails = ({ movie, cast }) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
-      <Typography variant="h5" component="h3">
+      <Typography variant="h5" component="h3" sx={{mb: 1}}>
         Overview
       </Typography>
 
-      <Typography variant="h6" component="p">
+      <Typography variant="body1" component="p" sx={{mb: 2}}>
         {movie.overview}
       </Typography>
+
+      <CastList cast={cast} />
 
       <Paper 
         component="ul" 

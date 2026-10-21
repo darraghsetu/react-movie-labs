@@ -1,33 +1,43 @@
 import { useParams } from 'react-router';
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
-import { getMovie } from '../api/tmdb-api'
+import { getMovie, getCast } from '../api/tmdb-api';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 
 const MoviePage = (props) => {
   const { id } = useParams();
 
-  const { data: movie, error, isPending, isError  } = useQuery({
+  const { data: movieData, error: movieError, isPending: moviePending, isError: movieIsError  } = useQuery({
     queryKey: ['movie', {id: id}],
     queryFn: getMovie,
   })
 
-  if (isPending) {
+  const { data: castData, error: castError, isPending: castPending, isError: castIsError } = useQuery({
+    queryKey: ["cast", {id: id}],
+    queryFn: getCast,
+  });
+
+  if (moviePending || castPending) {
     return <Spinner />;
   }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
+  if (movieIsError) {
+    return <h1>{movieError.message}</h1>;
   }
 
+  if (castIsError) {
+    return <h1>{castError.message}</h1>;
+  }
+
+  const cast = castData?.cast || [];
 
   return (
     <>
-      {movie ? (
+      {movieData ? (
         <>
-          <PageTemplate movie={movie}>
-            <MovieDetails movie={movie} />
+          <PageTemplate movie={movieData}>
+            <MovieDetails movie={movieData} cast={cast} />
           </PageTemplate>
         </>
       ) : (

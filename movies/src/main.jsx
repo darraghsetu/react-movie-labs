@@ -13,7 +13,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme';
-
+import DevPage from "./pages/devPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,6 +33,7 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
+            <Route path="/dev" element={<DevPage />} />
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
             <Route path="/movies/upcoming" element={<UpcomingPage />} />
             <Route path="/reviews/:id" element={<MovieReviewPage />} />
