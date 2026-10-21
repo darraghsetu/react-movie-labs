@@ -12,6 +12,9 @@ import { useNavigate } from "react-router";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import Stack from '@mui/material/Stack';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -25,10 +28,8 @@ const SiteHeader = () => {
   const navigate = useNavigate();
 
   const menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Favorites", path: "/movies/favorites" },
-    { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Option 4", path: "/" },
+    { label: "Favourites", path: "/movies/favorites", icon: <FavoriteIcon /> },
+    { label: "Upcoming", path: "/movies/upcoming", icon: <CalendarTodayIcon /> },
   ];
 
   const handleMenuSelect = (pageURL) => {
@@ -88,17 +89,18 @@ const SiteHeader = () => {
                 </Menu>
               </>
             ) : (
-              <>
+              <Stack direction="row" spacing={2}>
                 {menuOptions.map((opt) => (
                   <Button
                     key={opt.label}
                     color="inherit"
                     onClick={() => handleMenuSelect(opt.path)}
+                    startIcon={opt.icon}
                   >
                     {opt.label}
                   </Button>
                 ))}
-              </>
+              </Stack>
             )}
         </Toolbar>
       </AppBar>
