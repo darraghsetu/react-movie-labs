@@ -9,7 +9,10 @@ import SiteHeader from "./components/siteHeader";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import MoviesContextProvider from "./contexts/moviesContext";
-import AddMovieReviewPage from './pages/addMovieReviewPage'
+import AddMovieReviewPage from './pages/addMovieReviewPage';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { theme } from './theme';
 
 
 const queryClient = new QueryClient({
@@ -26,6 +29,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <ThemeProvider theme={theme}>
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
@@ -38,6 +42,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </MoviesContextProvider>
+        </ThemeProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
