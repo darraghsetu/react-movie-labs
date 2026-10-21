@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
+import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router";
@@ -41,14 +42,15 @@ const SiteHeader = () => {
 
   return (
     <>
-      <AppBar position="fixed" color="secondary">
+      <AppBar position="fixed" color="primary">
         <Toolbar>
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
+          <Button color="inherit" onClick={() => navigate("/")}
+            sx={{ textTransform: "none" }} >
+          <Typography variant="h5">
             TMDB Client
           </Typography>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            All you ever wanted to know about Movies!
-          </Typography>
+          </Button>
+          <Box sx={{ flexGrow: 1 }} />
             {isMobile ? (
               <>
                 <IconButton

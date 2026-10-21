@@ -10,7 +10,7 @@ const FALLBACK_IMAGE_URL = `https://via.placeholder.com/${IMAGE_WIDTH}x${IMAGE_H
 export default function CastList({ cast }){
     return(
       <>
-      <Typography variant="h5" component="h3" sx={{mb: 2}}>
+      <Typography variant="h5" component="h3" sx={{mb: 2}} color='primary'>
         Cast
       </Typography>
       <Paper sx={{ display: 'flex', overflowX: 'auto', gap: 2, p: 2, mb: 2 }}>

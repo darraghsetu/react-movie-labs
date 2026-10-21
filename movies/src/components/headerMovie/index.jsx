@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
+import Box from "@mui/material/Box";
 import { useNavigate } from "react-router";
 
 const MovieHeader = (props) => {
@@ -19,23 +20,25 @@ const MovieHeader = (props) => {
             flexWrap: "wrap",
             padding: 1.5,
             margin: 0,
+            minHeight: "70px" 
         }}
       >
       <IconButton aria-label="go back" onClick={() => navigate(-1)} >
-        <ArrowBackIcon color="primary" fontSize="large" />
+        <ArrowBackIcon color="secondary" fontSize="large" />
       </IconButton>
 
-      <Typography variant="h4" component="h3">
-        {movie.title}
-        <a href={movie.homepage}>
-          <HomeIcon color="primary" />
-        </a>
-        <br />
-        <span sx={{ fontSize: "1.5rem" }}>{`   "${movie.tagline}"`} </span>
-      </Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Typography variant="h4" component="h3" color='secondary' >
+          {movie.title}
+        </Typography>
+
+        <Typography variant="subtitle1" component="h6">
+          <i>{`"${movie.tagline}"`}</i>
+        </Typography>
+      </Box>
 
       <IconButton aria-label="go forward" onClick={() => navigate(+1) } >
-        <ArrowForwardIcon color="primary" fontSize="large" />
+        <ArrowForwardIcon color="secondary" fontSize="large" />
       </IconButton>
     </Paper>
   );

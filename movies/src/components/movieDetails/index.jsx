@@ -27,7 +27,7 @@ const MovieDetails = ({ movie, cast }) => {
 
   return (
     <>
-      <Typography variant="h5" component="h3" sx={{mb: 1}}>
+      <Typography variant="h5" component="h3" sx={{mb: 1}} color='primary'>
         Overview
       </Typography>
 
@@ -79,7 +79,7 @@ const MovieDetails = ({ movie, cast }) => {
       </Paper>
       
       <Fab
-        color="secondary"
+        color="primary"
         variant="extended"
         onClick={() =>setDrawerOpen(true)}
         sx={{
