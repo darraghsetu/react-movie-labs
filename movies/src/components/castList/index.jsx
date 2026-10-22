@@ -1,5 +1,6 @@
 import React from 'react';
 import { Paper, Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { useNavigate } from "react-router";
 
 const CARD_WIDTH = 140
 const IMAGE_WIDTH = CARD_WIDTH;
@@ -8,6 +9,8 @@ const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w185";
 const FALLBACK_IMAGE_URL = `https://via.placeholder.com/${IMAGE_WIDTH}x${IMAGE_HEIGHT}?text=No+Image`;
 
 export default function CastList({ cast }){
+    const navigate = useNavigate();
+
     return(
       <>
       <Typography variant="h5" component="h3" sx={{mb: 2}} color='primary'>
@@ -24,6 +27,7 @@ export default function CastList({ cast }){
               display: 'flex',
               flexDirection: 'column',
             }}
+            onClick={() => navigate(`/cast/${person.id}`)}
           >
             <CardMedia
               component="img"

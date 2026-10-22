@@ -1,3 +1,7 @@
+import { tryFetch } from "../utils"
+
+const TMDB_URL_SUFFIX = `?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+
 export const getMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
@@ -30,6 +34,14 @@ export const getCast = (args) => {
   .catch((error) => {
     throw error
  });
+}
+
+export const getPerson = (args) => {
+  const [, idPart] = args.queryKey;
+  const { id } = idPart;
+  const url = `https://api.themoviedb.org/3/person/${id}${TMDB_URL_SUFFIX}`
+
+  return tryFetch(url);
 }
 
 export const getUpcomingMovies = () => {
