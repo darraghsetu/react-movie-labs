@@ -44,6 +44,14 @@ export const getPerson = (args) => {
   return tryFetch(url);
 }
 
+export const getPersonMovies = (args) => {
+  const [, idPart] = args.queryKey;
+  const { id } = idPart;
+  const url = `https://api.themoviedb.org/3/person/${id}/movie_credits${TMDB_URL_SUFFIX}`
+
+  return tryFetch(url);
+}
+
 export const getUpcomingMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`

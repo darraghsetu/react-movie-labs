@@ -1,1 +1,2 @@
 api/tmdb-api: change the urls so they can use tryFetch
+pages/castDetailsPage change the fallback url for movie images
