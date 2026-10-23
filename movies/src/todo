@@ -1,2 +1,5 @@
 api/tmdb-api: change the urls so they can use tryFetch
 pages/castDetailsPage change the fallback url for movie images
+add a search func
+movieDetailsPage: when no bio, remove the show more button, put "No bio" 
+castDetailPage: Add reverse sort button

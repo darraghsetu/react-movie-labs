@@ -1,8 +1,9 @@
 import { useState } from "react";
-import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
+import NavHeader from "../navHeader";
+import Typography from "@mui/material/Typography";
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
@@ -25,7 +26,11 @@ function MovieListPageTemplate({ movies, title, action }) {
   return (
     <Grid container>
       <Grid size={12}>
-        <Header title={title} />
+        <NavHeader pageTitle={() => (
+          <Typography variant="h4" component="h3" color="secondary">
+            {title}
+          </Typography>
+        )}/>
       </Grid>
       <Grid container sx={{flex: "1 1 500px"}}>
         <Grid 

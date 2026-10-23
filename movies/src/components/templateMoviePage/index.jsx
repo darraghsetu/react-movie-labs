@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import Spinner from '../spinner'
-import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
+import NavHeader from "../navHeader";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const TemplateMoviePage = ({ movie, children }) => {
   const { data, error, isPending, isError } = useQuery({
@@ -24,7 +26,20 @@ const TemplateMoviePage = ({ movie, children }) => {
 
   return (
     <>
-      <MovieHeader movie={movie} />
+      <NavHeader pageTitle={() => (
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Typography variant="h4" component="h3" color='secondary' >
+            {movie.title}
+          </Typography>
+
+          { movie.tagline ?
+              <Typography variant="subtitle1" component="h6">
+                <i>{`"${movie.tagline}"`}</i>
+              </Typography>
+            : null
+          }
+        </Box>
+      )} />
 
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid size={{xs: 3}}>
