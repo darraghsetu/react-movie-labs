@@ -9,14 +9,50 @@ import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router";
-import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import Stack from '@mui/material/Stack';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import { styled, alpha } from '@mui/material/styles';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
+// The following 3 consts code are taken from: https://mui.com/material-ui/react-app-bar/#app-bar-with-a-primary-search-field
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  flex: '0 1 40%',
+  minWidth: '150px',
+  maxWidth: '500px',
+  margin: theme.spacing(0, 'auto'),
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  width: '100%',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    width: '100%',
+  },
+}));
 
 const SiteHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -46,11 +82,22 @@ const SiteHeader = () => {
       <AppBar position="fixed" color="primary">
         <Toolbar>
           <Button color="inherit" onClick={() => navigate("/")}
-            sx={{ textTransform: "none" }} >
-          <Typography variant="h5">
-            TMDB Client
-          </Typography>
+            sx={{ textTransform: "none" }}
+          >
+            <Typography variant="h5">
+              TMDB Client
+            </Typography>
           </Button>
+          <Box sx={{flexGrow: 1 }} />
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           <Box sx={{ flexGrow: 1 }} />
             {isMobile ? (
               <>
