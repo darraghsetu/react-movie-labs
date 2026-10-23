@@ -19,6 +19,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import NavHeader from '../components/navHeader';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
+import IconButton from '@mui/material/IconButton';
+import { useMemo } from 'react';
 
 const IMAGE_WIDTH = 185;
 const IMAGE_HEIGHT = 278;
@@ -29,6 +32,7 @@ const CastPage = (props) => {
   const { id } = useParams();
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
+  const [sortOrder, setSortOrder] = useState('desc');
 
   const { data: personData, error: personError, isPending: personPending, isError: personIsError } = useQuery({
     queryKey: ['person', {id: id}],
@@ -39,6 +43,18 @@ const CastPage = (props) => {
     queryKey: ['personMovies', {id: id}],
     queryFn: getPersonMovies,
   });
+  
+  const sortedMovies = useMemo(() => {
+    if (!moviesData) return [];
+
+    const filtered = moviesData.cast.filter((movie) => movie.release_date);
+
+    return filtered.sort((a, b) => {
+      const dateA = new Date(a.release_date);
+      const dateB = new Date(b.release_date);
+      return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+    });
+  }, [moviesData, sortOrder]);
 
   if (personPending || moviesPending) {
     return <Spinner />;
@@ -50,22 +66,6 @@ const CastPage = (props) => {
 
   if (moviesIsError) {
     return <h1>{moviesError.message}</h1>
-  }
-  
-  let sortedMovies = [];
-  let upcomingMovies = [];
-
-  if (!moviesPending) {
-    sortedMovies = [...moviesData.cast].sort((a, b) => {
-      const dateA = new Date(a.release_date);
-      const dateB = new Date(b.release_date);
-
-      return dateB - dateA
-    });
-
-    upcomingMovies = sortedMovies.filter((movie) => !movie.release);
-    sortedMovies = sortedMovies.filter((movie) => movie.release_date);
-    console.log(sortedMovies);
   }
 
   return(
@@ -101,9 +101,26 @@ const CastPage = (props) => {
         </Paper>
 
         <Paper sx={{ p: 3 }}>
-          <Typography variant="h4" color="primary" sx={{my: 1}}>
-            Movie Credits
-          </Typography>
+          <Box 
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              my: 1
+            }}
+          >
+            <Typography variant="h4" color="primary" sx={{my: 1}}>
+              Movie Credits
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Typography variant="body2" sx={{my: 1}}>
+                Sort by Year
+              </Typography>
+              <IconButton sx={{bgcolor: "primary.main", color: "white", "&:hover": { bgcolor: "primary.light" } }} onClick={() => {setSortOrder(order => (order === 'desc' ? 'asc' : 'desc'))}}>
+                <SwapVertIcon />
+              </IconButton>
+            </Box>
+          </Box>
           <Divider />
           <List disablePadding>
             {sortedMovies.map((movie) => (
@@ -120,6 +137,7 @@ const CastPage = (props) => {
                   />
                 </ListItemAvatar>
                 <ListItemText
+                  disableTypography
                   primary={
                       <Typography variant="h6" fontWeight="bold">
                         <b>{movie.title}</b> ({movie.release_date.slice(0, 4)})
