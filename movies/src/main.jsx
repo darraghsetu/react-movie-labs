@@ -15,6 +15,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme';
 import DevPage from "./pages/devPage";
 import CastPage from "./pages/castDetailsPage";
+import SearchPage from "./pages/searchPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,7 @@ const App = () => {
         <MoviesContextProvider>
           <Routes>
             <Route path="/dev" element={<DevPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/cast/:id" element={<CastPage />} />
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
             <Route path="/movies/upcoming" element={<UpcomingPage />} />

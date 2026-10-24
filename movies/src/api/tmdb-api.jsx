@@ -1,6 +1,6 @@
 import { tryFetch } from "../utils"
 
-const TMDB_URL_SUFFIX = `?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+const URL_SUFFIX = `api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
 
 export const getMovies = () => {
   return fetch(
@@ -39,7 +39,7 @@ export const getCast = (args) => {
 export const getPerson = (args) => {
   const [, idPart] = args.queryKey;
   const { id } = idPart;
-  const url = `https://api.themoviedb.org/3/person/${id}${TMDB_URL_SUFFIX}`
+  const url = `https://api.themoviedb.org/3/person/${id}?${URL_SUFFIX}`
 
   return tryFetch(url);
 }
@@ -47,7 +47,15 @@ export const getPerson = (args) => {
 export const getPersonMovies = (args) => {
   const [, idPart] = args.queryKey;
   const { id } = idPart;
-  const url = `https://api.themoviedb.org/3/person/${id}/movie_credits${TMDB_URL_SUFFIX}`
+  const url = `https://api.themoviedb.org/3/person/${id}/movie_credits?${URL_SUFFIX}`
+
+  return tryFetch(url);
+}
+
+export const getSearchResults = (args) => {
+  const [, queryPart] = args.queryKey;
+  const query = queryPart;
+  const url = `https://api.themoviedb.org/3/search/multi?query=${query}&${URL_SUFFIX}`
 
   return tryFetch(url);
 }

@@ -20,6 +20,7 @@ import { styled, alpha } from '@mui/material/styles';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
+
 // The following 3 consts code are taken from: https://mui.com/material-ui/react-app-bar/#app-bar-with-a-primary-search-field
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -60,9 +61,9 @@ const SiteHeader = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  
   const menuOptions = [
     { label: "Favourites", path: "/movies/favorites", icon: <FavoriteIcon /> },
     { label: "Upcoming", path: "/movies/upcoming", icon: <CalendarTodayIcon /> },
@@ -76,6 +77,15 @@ const SiteHeader = () => {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleSearchSubmit = (event) => {
+    if (event.key === "Enter") {
+      const query = event.target.value.trim();
+      if (query !== '') {
+        navigate(`/search?query=${encodeURIComponent(query)}`);
+      }
+    }
+  }
 
   return (
     <>
@@ -95,7 +105,10 @@ const SiteHeader = () => {
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search"
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ 
+                'aria-label': 'search',
+                onKeyDown: handleSearchSubmit,
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
