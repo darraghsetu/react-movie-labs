@@ -86,17 +86,24 @@ const CastPage = (props) => {
             <Typography variant="h3">
               {personData.name}
             </Typography>
-            <Typography variant="body1"> 
-              { expanded ? personData.biography : excerpt(personData.biography) }
-            </Typography>
-            <Button variant="outlined" onClick={() => setExpanded(!expanded)} 
-              startIcon = {
-                expanded ?
-                  <KeyboardArrowUpIcon />
-                  : <KeyboardArrowDownIcon />
-              }>
-              { expanded ? "Show Less" : "Show More" }
-            </Button>
+            { personData.biography ?
+              <>
+                <Typography variant="body1"> 
+                  { expanded ? personData.biography : excerpt(personData.biography) }
+                </Typography>
+                <Button variant="outlined" onClick={() => setExpanded(!expanded)} 
+                  startIcon = {
+                    expanded ?
+                      <KeyboardArrowUpIcon />
+                      : <KeyboardArrowDownIcon />
+                  }>
+                  { expanded ? "Show Less" : "Show More" }
+                </Button>
+              </>
+            : <Typography variant="body1">
+                No biography available.
+              </Typography>
+            }
           </Box>
         </Paper>
 
