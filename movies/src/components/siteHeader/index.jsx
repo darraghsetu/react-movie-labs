@@ -17,6 +17,7 @@ import Stack from '@mui/material/Stack';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
+import StarIcon from "@mui/icons-material/Star";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -65,6 +66,7 @@ const SiteHeader = () => {
   const navigate = useNavigate();
   
   const menuOptions = [
+    { label: "Top Rated", path: "/movies/top_rated", icon: <StarIcon /> },
     { label: "Favourites", path: "/movies/favorites", icon: <FavoriteIcon /> },
     { label: "Upcoming", path: "/movies/upcoming", icon: <CalendarTodayIcon /> },
   ];

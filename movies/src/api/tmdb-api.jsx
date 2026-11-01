@@ -149,3 +149,8 @@ export const getMovieReviews = ({ queryKey }) => {
   });
 };
 
+export const getTopRatedMovies = () => {
+  const url = `https://api.themoviedb.org/3/movie/top_rated?${URL_SUFFIX}`;
+
+  return tryFetch(url);
+}

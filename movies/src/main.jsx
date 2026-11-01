@@ -13,9 +13,9 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme';
-import DevPage from "./pages/devPage";
 import CastPage from "./pages/castDetailsPage";
 import SearchPage from "./pages/searchPage";
+import TopRatedPage from "./pages/topRatedPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +35,7 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
-            <Route path="/dev" element={<DevPage />} />
+            <Route path="/movies/top_rated" element={<TopRatedPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/cast/:id" element={<CastPage />} />
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
