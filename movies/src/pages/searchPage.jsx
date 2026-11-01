@@ -8,6 +8,11 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import MovieCard from '../components/movieSearchResultCard';
 import PersonCard from '../components/personSearchResultCard';
+import Accordion from '@mui/material/Accordion';
+import AccordionActions from '@mui/material/AccordionActions';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const SearchPage = (props) => {
   const [searchParams] = useSearchParams();
@@ -50,29 +55,33 @@ const SearchPage = (props) => {
       <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', my: 4}}>
         <Box sx={{width: { xs: '90%', md: '60%' }, display: 'flex', flexDirection: 'column', gap: 3 }}>
         { searchPeople.length > 0 ?
-            <Paper sx={{p: 3, display: 'flex', flexDirection: 'column', gap: 2}}>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{p: 2}}>
               <Typography variant="h5" color="primary">
                 People
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2}}>
+              </AccordionSummary>
+              <AccordionDetails>
                 {searchPeople.map((person) => (
                   <PersonCard key={person.id} person={person} />
                 ))}
-              </Box>
-            </Paper>
+              </AccordionDetails>
+            </Accordion>
           : <> </>
         }
         { searchMovies.length > 0 ?
-            <Paper sx={{p: 3, display: 'flex', flexDirection: 'column', gap: 2}}>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{p: 2}}>
               <Typography variant="h5" color="primary">
                 Movies
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2}}>
+              </AccordionSummary>
+              <AccordionDetails>
                 {searchMovies.map((movie) => (
                   <MovieCard key={movie.id} movie={movie} />
                 ))}
-              </Box>
-            </Paper>
+              </AccordionDetails>
+            </Accordion>
           : <> </> 
         }
         </Box>
