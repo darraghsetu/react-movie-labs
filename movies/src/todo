@@ -1,4 +1,4 @@
 api/tmdb-api: change the urls so they can use tryFetch
 pages/castDetailsPage change the fallback url for movie images
 movieDetailsPage: when no bio, remove the show more button, put "No bio" 
-add search page
+complete search page

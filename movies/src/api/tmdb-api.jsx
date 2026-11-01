@@ -52,10 +52,18 @@ export const getPersonMovies = (args) => {
   return tryFetch(url);
 }
 
-export const getSearchResults = (args) => {
+export const getMovieSearchResults = (args) => {
   const [, queryPart] = args.queryKey;
   const query = queryPart;
-  const url = `https://api.themoviedb.org/3/search/multi?query=${query}&${URL_SUFFIX}`
+  const url = `https://api.themoviedb.org/3/search/movie?query=${query}&${URL_SUFFIX}`
+
+  return tryFetch(url);
+}
+
+export const getPersonSearchResults = (args) => {
+  const [, queryPart] = args.queryKey;
+  const query = queryPart;
+  const url = `https://api.themoviedb.org/3/search/person?query=${query}&${URL_SUFFIX}`
 
   return tryFetch(url);
 }

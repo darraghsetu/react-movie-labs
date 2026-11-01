@@ -1,30 +1,82 @@
 import { useSearchParams } from 'react-router';
 import Spinner from "../components/spinner";
 import { useQuery } from "@tanstack/react-query";
-import { getSearchResults } from "../api/tmdb-api";
+import { getMovieSearchResults, getPersonSearchResults } from "../api/tmdb-api";
+import Typography from '@mui/material/Typography';
+import NavHeader from '../components/navHeader';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import MovieCard from '../components/movieSearchResultCard';
+import PersonCard from '../components/personSearchResultCard';
 
 const SearchPage = (props) => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query');
 
-  const { data, error, isPending, isError } = useQuery({
-    queryKey: ["search", query],
-    queryFn: getSearchResults,
+  const { data: movieData, error: movieError, isPending: movieIsPending, isError: movieIsError } = useQuery({
+    queryKey: ["search movie", query],
+    queryFn: getMovieSearchResults,
   });
 
-  if (isPending) {
+  const { data: personData, error: personError, isPending: personIsPending, isError: personIsError } = useQuery({
+    queryKey: ["search people", query],
+    queryFn: getPersonSearchResults,
+  });
+
+  if (movieIsPending || personIsPending) {
     return <Spinner />
   }
 
-  if (isError) {
-    return <h1>{error.message}</h1>
+  if (movieIsError) {
+    return <h1>{movieError.message}</h1>
+  }
+
+  if (personIsError) {
+    return <h1>{personError.message}</h1>
   }
   
-  const searchPeople = data.results.filter((result) => result.media_type === "person")
-  const searchMovies = data.results.filter((result) => result.media_type === "movie")
+  const searchMovies = movieData?.results || []
+  const searchPeople = personData?.results || []
+  const numResults = searchMovies.length + searchPeople.length;
 
   return(
     <>
+      <NavHeader pageTitle={() => 
+        <Typography variant="h6" color="primary">
+          { numResults > 0 ? `Search results for "${query}"` : `No results for "${query}"` }
+        </Typography>
+      }>
+      </NavHeader>
+      <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', my: 4}}>
+        <Box sx={{width: { xs: '90%', md: '60%' }, display: 'flex', flexDirection: 'column', gap: 3 }}>
+        { searchPeople.length > 0 ?
+            <Paper sx={{p: 3, display: 'flex', flexDirection: 'column', gap: 2}}>
+              <Typography variant="h5" color="primary">
+                People
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2}}>
+                {searchPeople.map((person) => (
+                  <PersonCard key={person.id} person={person} />
+                ))}
+              </Box>
+            </Paper>
+          : <> </>
+        }
+        { searchMovies.length > 0 ?
+            <Paper sx={{p: 3, display: 'flex', flexDirection: 'column', gap: 2}}>
+              <Typography variant="h5" color="primary">
+                Movies
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2}}>
+                {searchMovies.map((movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </Box>
+            </Paper>
+          : <> </> 
+        }
+        </Box>
+      </Box>
     {console.log(searchMovies)}
     {console.log(searchPeople)}
     </>
