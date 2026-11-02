@@ -3,10 +3,13 @@ import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
+import { useState } from "react";
 
 const HomePage = (props) => {
+  const [page, setPage] = useState(1);
+
   const { data, error, isPending, isError } = useQuery({
-    queryKey: ["discover"],
+    queryKey: ["discover", page],
     queryFn: getMovies,
   });
 
@@ -19,6 +22,7 @@ const HomePage = (props) => {
   }
 
   const movies = data.results;
+  const totalPages = data.total_pages;
 
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter((m) => m.favorite);
@@ -29,6 +33,9 @@ const HomePage = (props) => {
     <PageTemplate
       title="Discover Movies"
       movies={movies}
+      totalPages={totalPages}
+      page={page}
+      onPageChange={(newPage) => setPage(newPage)}
       action={(movie) => {
         return <AddToFavoritesIcon movie={movie} />;
       }}

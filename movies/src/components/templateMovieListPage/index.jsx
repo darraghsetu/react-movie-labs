@@ -4,8 +4,9 @@ import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 import NavHeader from "../navHeader";
 import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination";
 
-function MovieListPageTemplate({ movies, title, action }) {
+function MovieListPageTemplate({ movies, title, action, totalPages = 1, page = 1, onPageChange }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
@@ -22,6 +23,10 @@ function MovieListPageTemplate({ movies, title, action }) {
     if (type === "name") setNameFilter(value);
     else setGenreFilter(value);
   };
+
+  const handlePageChange = (event, page) => {
+    onPageChange(page)
+  }
 
   return (
     <Grid container>
@@ -45,6 +50,18 @@ function MovieListPageTemplate({ movies, title, action }) {
           />
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>
+      </Grid>
+      <Grid size={12} sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+        <Pagination
+          count={totalPages > 500 ? 500 : totalPages}
+          page={page}
+          onChange={handlePageChange}
+          color="secondary"
+          size="large"
+          shape="rounded"
+          showFirstButton
+          showLastButton
+        />
       </Grid>
     </Grid>
   );

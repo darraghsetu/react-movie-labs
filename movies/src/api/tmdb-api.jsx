@@ -2,8 +2,10 @@ import { tryFetch } from "../utils";
 
 const URL_SUFFIX = `api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`;
 
-export const getMovies = () => {
-    const url = `https://api.themoviedb.org/3/discover/movie?${URL_SUFFIX}`;
+export const getMovies = (args) => {
+    const [, pagePart] = args.queryKey;
+    const page = pagePart;
+    const url = `https://api.themoviedb.org/3/discover/movie?page=${page}&${URL_SUFFIX}`;
 
     return tryFetch(url);
 };
@@ -48,8 +50,10 @@ export const getPersonSearchResults = (args) => {
   return tryFetch(url);
 }
 
-export const getUpcomingMovies = () => {
-  const url = `https://api.themoviedb.org/3/movie/upcoming?${URL_SUFFIX}`;
+export const getUpcomingMovies = (args) => {
+  const [, pagePart] = args.queryKey;
+  const page = pagePart;
+  const url = `https://api.themoviedb.org/3/movie/upcoming?page=${page}&${URL_SUFFIX}`;
 
   return tryFetch(url);
 };
@@ -84,8 +88,10 @@ export const getMovieReviews = ({ queryKey }) => {
   return tryFetch(url);
 };
 
-export const getTopRatedMovies = () => {
-  const url = `https://api.themoviedb.org/3/movie/top_rated?${URL_SUFFIX}`;
+export const getTopRatedMovies = (args) => {
+  const [, pagePart] = args.queryKey;
+  const page = pagePart;
+  const url = `https://api.themoviedb.org/3/movie/top_rated?page=${page}&${URL_SUFFIX}`;
 
   return tryFetch(url);
 }
