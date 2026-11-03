@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PageTemplate from '../components/templateMovieListPage';
 import { getUpcomingMovies } from "../api/tmdb-api";
-import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
+import AddToWatchlistIcon from "../components/cardIcons/addToWatchlist";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
 
@@ -32,7 +32,7 @@ const UpcomingPage = () => {
       page={page}
       onPageChange={(newPage) => setPage(newPage)}
       action={(movie) => {
-        return <AddToPlaylistIcon movie={movie} />;
+        return <AddToWatchlistIcon movie={movie} />;
       }}
     />
   );

@@ -17,29 +17,22 @@ import { Link } from "react-router";
 
 export default function MovieCard({ movie, action }) {
 
-  const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { favourites, addToFavourites } = useContext(MoviesContext);
 
-  if (favorites.find((id) => id === movie.id)) {
-    movie.favorite = true;
+  if (favourites.find((id) => id === movie.id)) {
+    movie.favourite = true;
   } else {
-    movie.favorite = false
+    movie.favourite = false
   }
 
-  const handleAddToFavorite = (e) => {
+  const handleAddToFavourite = (e) => {
     e.preventDefault();
-    addToFavorites(movie);
+    addToFavourites(movie);
   };
   
   return (
     <Card>
       <CardHeader
-        avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
         title={
           <Typography variant="h5" component="p">
             {movie.title}{" "}

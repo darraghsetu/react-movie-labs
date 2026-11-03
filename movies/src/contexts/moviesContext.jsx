@@ -3,49 +3,52 @@ import React, { useState } from "react";
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
-  const [favorites, setFavorites] = useState([]);
+  const [favourites, setFavourites] = useState([]);
   const [myReviews, setMyReviews] = useState({});
-  const [playlist, setPlaylist] = useState([]);
+  const [watchlist, setWatchlist] = useState([]);
 
-  const addToFavorites = (movie) => {
-    let newFavorites = [];
-    if (!favorites.includes(movie.id)) {
-      newFavorites = [...favorites, movie.id];
+  const addToFavourites = (movie) => {
+    let newFavourites = [];
+    if (!favourites.includes(movie.id)) {
+      newFavourites = [...favourites, movie.id];
     } else {
-      newFavorites = [...favorites];
+      newFavourites = [...favourites];
     }
-    setFavorites(newFavorites);
+    setFavourites(newFavourites);
   };
 
-  const removeFromFavorites = (movie) => {
-    setFavorites(favorites.filter((mId) => mId !== movie.id));
+  const removeFromFavourites = (movie) => {
+    setFavourites(favourites.filter((mId) => mId !== movie.id));
   };
 
   const addReview = (movie, review) => {
     setMyReviews({ ...myReviews, [movie.id]: review });
   };
-  // console.log(myReviews);
 
-  const addToPlaylist = (movie) => {
-    let newPlaylist = [];
-    if (!playlist.includes(movie.id)) {
-      newPlaylist = [...playlist, movie.id];
+  const addToWatchlist = (movie) => {
+    let newWatchlist = [];
+    if (!watchlist.includes(movie.id)) {
+      newWatchlist = [...watchlist, movie.id];
     } else {
-      newPlaylist = [...playlist];
+      newWatchlist = [...watchlist];
     }
-    setPlaylist(newPlaylist);
+    setWatchlist(newWatchlist);
   };
-  // console.log(playlist);
+
+  const removeFromWatchlist = (movie) => {
+    setWatchlist(watchlist.filter((mId) => mId !== movie.id));
+  };
 
   return (
     <MoviesContext.Provider
       value={{
-        favorites,
-        addToFavorites,
-        removeFromFavorites,
+        favourites,
+        addToFavourites,
+        removeFromFavourites,
         addReview,
-        addToPlaylist,
-        playlist
+        watchlist,
+        addToWatchlist,
+        removeFromWatchlist
       }}
     >
       {props.children}
