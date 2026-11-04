@@ -18,6 +18,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import StarIcon from "@mui/icons-material/Star";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -66,8 +67,9 @@ const SiteHeader = () => {
   const navigate = useNavigate();
   
   const menuOptions = [
+    { label: "Watchlist", path: "/movies/watchlist", icon: <VisibilityOutlinedIcon /> },
     { label: "Top Rated", path: "/movies/top_rated", icon: <StarIcon /> },
-    { label: "Favourites", path: "/movies/favorites", icon: <FavoriteIcon /> },
+    { label: "Favourites", path: "/movies/favourites", icon: <FavoriteIcon /> },
     { label: "Upcoming", path: "/movies/upcoming", icon: <CalendarTodayIcon /> },
   ];
 

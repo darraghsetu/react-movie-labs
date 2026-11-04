@@ -2,8 +2,9 @@ import { getMovies } from "../api/tmdb-api";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
-import FavoriteIcon from "../components/cardIcons/favouriteIcon";
+import FavouriteIcon from "../components/cardIcons/favouriteIcon";
 import { useState } from "react";
+import WatchlistIcon from "../components/cardIcons/watchlistIcon";
 
 const HomePage = (props) => {
   const [page, setPage] = useState(1);
@@ -32,7 +33,10 @@ const HomePage = (props) => {
       page={page}
       onPageChange={(newPage) => setPage(newPage)}
       action={(movie) => {
-        return <FavoriteIcon movie={movie} />;
+        return <>
+          <FavouriteIcon movie={movie} />
+          <WatchlistIcon movie={movie} />
+        </>
       }}
     />
   );
