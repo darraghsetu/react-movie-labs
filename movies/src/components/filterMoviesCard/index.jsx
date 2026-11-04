@@ -14,6 +14,8 @@ import Select from "@mui/material/Select";
 import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import CardHeader from '@mui/material/CardHeader';
 
 const formControl = 
   {
@@ -68,20 +70,29 @@ export default function FilterMoviesCard(props) {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: ""
       }} 
       variant="outlined">
+      <CardHeader
+        avatar={
+          <Avatar sx={{ bgcolor: 'primary.main' }}> 
+            <SearchIcon />
+          </Avatar>
+        }
+        title={
+          <Typography variant="h5" sx={{ color: 'primary.main' }}>
+            Filter the Movies
+          </Typography>
+        }
+        sx={{ pl: 3 }}
+      />
       <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" />
-          Filter the movies.
-        </Typography>
         <TextField
-          sx={{...formControl}}
+          sx={{...formControl}} 
           id="filled-search"
-          label="Search field"
+          label="Filter by Title"
           type="search"
-          variant="filled"
+          variant="outlined"
           value={props.titleFilter}
           onChange={handleTextChange}
         />
@@ -89,6 +100,7 @@ export default function FilterMoviesCard(props) {
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             id="genre-select"
+            label="Genre"
             defaultValue=""
             value={props.genreFilter}
             onChange={handleGenreChange}
@@ -116,18 +128,6 @@ export default function FilterMoviesCard(props) {
             valueLabelDisplay="auto"
           />
         </Box>
-      </CardContent>
-      <CardMedia
-        sx={{ height: 300 }}
-        image={img}
-        title="Filter"
-      />
-      <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" />
-          Filter the movies.
-          <br />
-        </Typography>
       </CardContent>
     </Card>
   );

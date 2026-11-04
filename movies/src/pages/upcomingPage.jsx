@@ -4,6 +4,7 @@ import { getUpcomingMovies } from "../api/tmdb-api";
 import WatchlistIcon from "../components/cardIcons/watchlistIcon";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
+import FavouriteIcon from "../components/cardIcons/favouriteIcon";
 
 const UpcomingPage = () => {
   const [page, setPage] = useState(1);
@@ -32,7 +33,10 @@ const UpcomingPage = () => {
       page={page}
       onPageChange={(newPage) => setPage(newPage)}
       action={(movie) => {
-        return <WatchlistIcon movie={movie} />;
+        return <>
+            <FavouriteIcon movie={movie} />
+            <WatchlistIcon movie={movie} />
+          </>
       }}
     />
   );
