@@ -12,6 +12,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
+import Slider from '@mui/material/Slider';
+import Box from '@mui/material/Box';
 
 const formControl = 
   {
@@ -34,6 +36,7 @@ export default function FilterMoviesCard(props) {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
+
   const genres = data.genres;
   if (genres[0].name !== "All"){
     genres.unshift({ id: "0", name: "All" });
@@ -51,6 +54,16 @@ export default function FilterMoviesCard(props) {
   const handleGenreChange = (e) => {
     handleChange(e, "genre", e.target.value);
   };
+
+  const handleRatingChange = (e) => {
+    handleChange(e, "rating", e.target.value);
+  }
+
+  const sliderMarks = [
+    { value: 0, label: '0' },
+    { value: 5, label: '5' },
+    { value: 10, label: '10' }
+  ];
 
   return (
     <Card 
@@ -75,7 +88,6 @@ export default function FilterMoviesCard(props) {
         <FormControl sx={{...formControl}}>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
-            labelId="genre-label"
             id="genre-select"
             defaultValue=""
             value={props.genreFilter}
@@ -90,6 +102,20 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
+        <Box sx={{mx: 3}}>
+          <InputLabel id="rating-label" sx={{pt: 2}}>Average Rating</InputLabel>
+          <Slider
+            id="rating-slider"
+            value={props.ratingFilter}
+            onChange={handleRatingChange}
+            marks={sliderMarks}
+            shiftStep={1}
+            step={1}
+            min={0}
+            max={10}
+            valueLabelDisplay="auto"
+          />
+        </Box>
       </CardContent>
       <CardMedia
         sx={{ height: 300 }}

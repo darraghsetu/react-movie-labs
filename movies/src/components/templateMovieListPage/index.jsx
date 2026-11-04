@@ -9,6 +9,7 @@ import Pagination from "@mui/material/Pagination";
 function MovieListPageTemplate({ movies, title, action, totalPages = 1, page = 1, onPageChange }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
+  const [ratingFilter, setRatingFilter] = useState([0, 10]);
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
@@ -16,12 +17,20 @@ function MovieListPageTemplate({ movies, title, action, totalPages = 1, page = 1
       return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
     })
     .filter((m) => {
+      return m.vote_average >= ratingFilter[0] && m.vote_average <= ratingFilter[1];
+    })
+    .filter((m) => {
       return genreId > 0 ? m.genre_ids.includes(genreId) : true;
     });
 
   const handleChange = (type, value) => {
-    if (type === "name") setNameFilter(value);
-    else setGenreFilter(value);
+    if (type === "name") {
+      setNameFilter(value);
+    } else if (type === "rating") {
+      setRatingFilter(value);
+    } else {
+      setGenreFilter(value);
+    }
   };
 
   const handlePageChange = (event, page) => {
@@ -40,13 +49,14 @@ function MovieListPageTemplate({ movies, title, action, totalPages = 1, page = 1
       <Grid container sx={{flex: "1 1 500px"}}>
         <Grid 
           key="find" 
-          size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}} 
+          size={{xs: 12, sm: 6, md: 4, lg: 3}} 
           sx={{padding: "20px"}}
         >
           <FilterCard
             onUserInput={handleChange}
             titleFilter={nameFilter}
             genreFilter={genreFilter}
+            ratingFilter={ratingFilter}
           />
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>
